@@ -35,51 +35,8 @@ controller.hears([':alien:'], 'direct_message,direct_mention,mention', function(
 });
 
 controller.on('user_channel_join, user_group_join',function(bot,message) {
-	  bot.reply(message,'Welcome');}
-
-    
-controller.hears([':joy:'], 'direct_message,direct_mention,mention', function(bot, message) {
-    request('http://tambal.azurewebsites.net/joke/random', function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            var json = JSON.parse(body);
-            bot.reply(message, json.joke);
-        }
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	  bot.reply(message,'Welcome :smile:')
+  });
 
 controller.hears([':newspaper:'], 'direct_message,direct_mention,mention', function(bot, message) {
     request('http://api.nytimes.com/svc/topstories/v1/home.json?api-key=17ce8b118db416598094a8319342a76b:17:50393256', function(error, response, body) {
@@ -90,3 +47,20 @@ controller.hears([':newspaper:'], 'direct_message,direct_mention,mention', funct
         }
     });
 });
+
+controller.hears([':joy:'], 'direct_message,direct_mention,mention', function(bot, message) {
+    request('http://tambal.azurewebsites.net/joke/random', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var json = JSON.parse(body);
+            bot.reply(message, json.joke);
+        }
+    });
+});
+
+controller.hears([':disappointed:'], 'direct_message,direct_mention,mention', function(bot, message) {
+	  bot.reply(message,'Flip that frown upside down! Tomorrow will be a better day!')
+  });
+
+  controller.hears([':heart:', ':heart_eyes:'], 'direct_message,direct_mention,mention', function(bot, message) {
+  	  bot.reply(message,'I love you too! :heart:')
+    });
