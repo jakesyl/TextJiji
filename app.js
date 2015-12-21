@@ -20,6 +20,11 @@ controller.spawn({
 });
 
 
+controller.hears(['What can you do?', 'help', 'What do you do'], 'direct_message,direct_mention,mention', function(bot, message) {
+    bot.reply(message, "I can do the following\n:alien: Post Gifs\n:newspaper: Post News\n:joy: Post Jokes\n:disappointed: Make you feel better");
+});
+
+
 controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function(bot, message) {
     bot.reply(message, "Hello.");
 });
@@ -61,6 +66,53 @@ controller.hears([':disappointed:'], 'direct_message,direct_mention,mention', fu
 	  bot.reply(message,'Flip that frown upside down! Tomorrow will be a better day!')
   });
 
-  controller.hears([':heart:', ':heart_eyes:'], 'direct_message,direct_mention,mention', function(bot, message) {
-  	  bot.reply(message,'I love you too! :heart:')
+controller.hears([':heart:', ':heart_eyes:', 'love'], 'direct_message,direct_mention,mention', function(bot, message) {
+  	  bot.reply(message,'Aww, you\'re far too kind! I love you too, BFF :blush::two_hearts:')
     });
+
+controller.hears([':grinning:', ':smiley:', ':smile:'], 'direct_message,direct_mention,mention', function(bot, message) {
+
+var mySmileyQuotes = ["It always warms my heart to see a smile on your face!",
+"Look at those pearly whites! Your dentist must be proud. What brand of toothpaste do you use?",
+"We may never know all the good that a simple smile can do.\" -Mother Theresa",
+"\"It looks like you're in a chipper mood today! I'm happy when my friends are happy, too :grinning:",
+"Use your smile to change the world, but don't let the world change your smile!",
+"If you think about it, a smile costs a lot less than electricity, yet still has the ability to brighten everyone's day!",
+"\"A smile is happiness you can find right under your nose\". -Tom Wilson",
+"\"A smile is a curve that sets everything straight\" -Phyllis Diller",
+"It's good to know that you're in a great mood today, BFF! Every day that ends in 'Day' is a good day :wink:"
+        ]
+
+var smileyQuote = mySmileyQuotes[Math.floor(Math.random() * mySmileyQuotes.length)];
+      	  bot.reply(message, smileyQuote)
+        });
+
+
+var spotifyHeaders = {
+    'Accept': 'application/json',
+    'Authorization': 'Bearer BQDrdS20lsgQI7Q-DIZ-KpSnKvdtOkJMPUDZKySFbB5qKh54twbDiVR2d9r8_iFU9L4FiS7vUKMH0AM6iyMKTk41yFxYtrlIQnYxwLWZ-K759jAaqnQf5tSMZzMxfnsMOVu6PxG6n5gKkawe5nhyX0g'
+};
+
+
+controller.hears([':headphones:', ':musical_note:'], 'direct_message,direct_mention,mention', function(bot, message) {
+  var defaultSpotifyOptions = {
+      url: 'https://api.spotify.com/v1/browse/featured-playlists?limit=1',
+      spotifyHeaders: spotifyHeaders
+  };
+
+  request(defaultSpotifyOptions),function(error, response, body) {
+      if (!error && response.statusCode == 200) {
+          var json = JSON.parse(body);
+          console.log(json.playlists.items.external_urls.spotify);
+          bot.reply(message, json.playlists.items.external_urls.spotify);
+      }}
+});
+
+controller.hears([':cat:'], 'direct_message,direct_mention,mention', function(bot, message) {
+    request('http://catfacts-api.appspot.com/api/facts?number=1', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var json = JSON.parse(body);
+            bot.reply(message, json.facts);
+        }
+    });
+});
