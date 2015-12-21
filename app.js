@@ -42,3 +42,47 @@ controller.hears([':joy:'], 'direct_message,direct_mention,mention', function(bo
         }
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+controller.hears([':newspaper:'], 'direct_message,direct_mention,mention', function(bot, message) {
+    request('http://api.nytimes.com/svc/topstories/v1/home.json?api-key=17ce8b118db416598094a8319342a76b:17:50393256', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var json = JSON.parse(body);
+            var randNum = Math.floor((Math.random() * json.results.length) + 1);
+            bot.reply(message, "_" + json.results[randNum-1].section + "_:  " + ":point_right: *" + json.results[randNum-1].title + "* :point_left:" + json.results[randNum-1].url);
+        }
+    });
+});
