@@ -34,11 +34,5 @@ controller.hears([':alien:'], 'direct_message,direct_mention,mention', function(
     });
 });
 
-controller.hears([':joy:'], 'direct_message,direct_mention,mention', function(bot, message) {
-    request('http://tambal.azurewebsites.net/joke/random', function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            var json = JSON.parse(body);
-            bot.reply(message, json.joke);
-        }
-    });
-});
+controller.on('user_channel_join, user_group_join',function(bot,message) {
+	  bot.reply(message,'Welcome');}
